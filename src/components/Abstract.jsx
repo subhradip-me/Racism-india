@@ -40,10 +40,10 @@ export default function Abstract() {
                         <br />
                         <span className='text-lg text-black font-weight-bold border-b-2 border-black pb-1 '>Keywords</span>
                         <br />
-                        <p className='pt-2'>
+                        <span className='block pt-2'>
                         Indian Hate Speech, Anti-India Abuse, Machine Learning, Text Classification, Natural Language
                         Processing, Code-Mixing, Social Media Analysis, Online Safety, Deep Learning
-                        </p>
+                        </span>
                     </p>
                 </div>
             </div>
