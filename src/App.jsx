@@ -6,6 +6,8 @@ import Hero from './components/Hero'
 import ModelDemo from './components/ModelDemo'
 import Catalogue from './components/Catalogue'
 import Research from './components/Research'
+import Abstract from './components/Abstract'
+import ProblemStatement from './components/ProblemStatement'
 import Architecture from './components/Architecture'
 import Footer from './components/Footer'
 
@@ -77,6 +79,12 @@ export default function App() {
         </section>
         <section id="research">
           <Research />
+        </section>
+        <section id="abstract">
+          <Abstract />
+        </section>
+        <section>
+          <ProblemStatement />
         </section>
         <section id="architecture">
           <Architecture />
