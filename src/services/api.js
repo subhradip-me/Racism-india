@@ -46,8 +46,14 @@ apiClient.interceptors.response.use(
  * @returns {Promise} Analysis results
  */
 export const analyzeHateSpeech = async (text) => {
-  const response = await apiClient.post('/analyze', { text })
-  return response.data
+    try {
+        const response = await apiClient.post('/analyze', { text })
+        return response.data
+    } catch (err) {
+        // normalize error for callers
+        const message = err.response?.data?.message || err.message || 'Failed to analyze text'
+        throw new Error(message)
+    }
 }
 
 /**
@@ -55,8 +61,14 @@ export const analyzeHateSpeech = async (text) => {
  * @returns {Promise} Model stats
  */
 export const getModelStats = async () => {
-  const response = await apiClient.get('/stats')
-  return response.data
+  try {
+    const response = await apiClient.get('/stats')
+    return response.data
+  } catch (err) {
+    // normalize error for callers
+    const message = err.response?.data?.message || err.message || 'Failed to fetch model stats'
+    throw new Error(message)
+  }
 }
 
 export default apiClient
