@@ -1,30 +1,28 @@
 import React, { useState } from 'react'
+import { analyzeHateSpeech } from '../services/api'
 
 export default function ModelDemo() {
   const [inputText, setInputText] = useState('')
   const [results, setResults] = useState(null)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
+  const [error, setError] = useState(null)
 
   const analyzeText = async () => {
     if (!inputText.trim()) return
     
     setIsAnalyzing(true)
+    setError(null)
     
-    // Simulate API call - replace with actual backend endpoint
-    setTimeout(() => {
-      // Mock results - replace with actual API response
-      setResults({
-        prediction: Math.random() > 0.5 ? 'HATE SPEECH' : 'NON-HATE',
-        categories: [
-          { name: 'Toxic', score: Math.random() * 100 },
-          { name: 'Obscene', score: Math.random() * 100 },
-          { name: 'Insult', score: Math.random() * 100 },
-          { name: 'Identity Hate', score: Math.random() * 100 },
-          { name: 'Threat', score: Math.random() * 100 }
-        ]
-      })
+    try {
+      // Call the actual API
+      const data = await analyzeHateSpeech(inputText)
+      setResults(data)
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to analyze text. Please try again.')
+      console.error('Analysis error:', err)
+    } finally {
       setIsAnalyzing(false)
-    }, 1500)
+    }
   }
 
   return (
@@ -60,6 +58,15 @@ export default function ModelDemo() {
               {isAnalyzing ? 'Analyzing...' : 'Analyze Text'}
             </button>
           </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-800">
+                ⚠ {error}
+              </p>
+            </div>
+          )}
 
           {/* Results */}
           {results && (
