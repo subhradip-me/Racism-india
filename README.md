@@ -105,7 +105,87 @@ src/
 For detailed information about the methodology, results, and findings, refer to:
 `Hate Speech Detection against Indians using BLSTM.pdf`
 
-## 🔧 Configuration
+## � API Contract
+
+The frontend expects a REST API with the following endpoints:
+
+### Analyze Text Endpoint
+
+**POST** `/api/analyze`
+
+**Request Body:**
+```json
+{
+  "text": "string (required) - The text to analyze for hate speech"
+}
+```
+
+**Success Response (200 OK):**
+```json
+{
+  "prediction": "string (HATE SPEECH | NON-HATE)",
+  "categories": [
+    {
+      "name": "Toxic",
+      "score": 85.5
+    },
+    {
+      "name": "Obscene",
+      "score": 12.3
+    },
+    {
+      "name": "Insult",
+      "score": 67.8
+    },
+    {
+      "name": "Identity Hate",
+      "score": 91.2
+    },
+    {
+      "name": "Threat",
+      "score": 23.4
+    }
+  ],
+  "confidence": 0.89,
+  "processingTime": 145
+}
+```
+
+**Error Response (400 Bad Request):**
+```json
+{
+  "error": "Bad Request",
+  "message": "Text is required"
+}
+```
+
+**Error Response (500 Internal Server Error):**
+```json
+{
+  "error": "Internal Server Error",
+  "message": "Model inference failed"
+}
+```
+
+### Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+For production, update the URL to your deployed backend endpoint.
+
+### Notes on API Integration
+
+- The `score` field in categories represents confidence percentage (0-100)
+- All scores should be numeric values
+- The `prediction` field should be one of: `"HATE SPEECH"` or `"NON-HATE"`
+- Response time should be kept under 3 seconds for good UX
+- API timeout is set to 10 seconds on the frontend
+
+## �🔧 Configuration
 
 ### Tailwind CSS v4
 The project uses Tailwind CSS v4 with the Vite plugin. Configuration is handled through the `@import "tailwindcss"` directive in `index.css`.

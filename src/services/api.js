@@ -12,20 +12,15 @@ const apiClient = axios.create({
   timeout: 10000, // 10 seconds
 })
 
-// Request interceptor for adding auth tokens if needed
-apiClient.interceptors.request.use(
-  (config) => {
-    // Add auth token if available
-    // const token = localStorage.getItem('token')
-    // if (token) {
-    //   config.headers.Authorization = `Bearer ${token}`
-    // }
-    return config
-  },
-  (error) => {
-    return Promise.reject(error)
-  }
-)
+// // Request interceptor for adding auth tokens if needed
+// apiClient.interceptors.request.use(
+//   (config) => {
+//     return config
+//   },
+//   (error) => {
+//     return Promise.reject(error)
+//   }
+// )
 
 // Response interceptor for handling errors
 apiClient.interceptors.response.use(
